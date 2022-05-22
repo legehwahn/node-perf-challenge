@@ -1,4 +1,4 @@
-# node-crypto-performance
+# node-perf-challenge
 
 ### Prerequisites
 
