@@ -4,7 +4,7 @@
 	"type": "module",
 	"main": "src/main.js",
 	"scripts": {
-		"start": "SET PORT=55055 && node --experimental-specifier-resolution=node src/main.js"
+		"start": "SET PORT=3000 && node --experimental-specifier-resolution=node src/main.js"
 	},
 	"license": "MIT",
 	"devDependencies": {

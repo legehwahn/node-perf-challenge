@@ -1,5 +1,105 @@
 import crypto from 'crypto';
 
+// #region Hash
+
+/**
+ * Create hash from a supplied string.
+ * 
+ * @param {string} target The string to hash.
+ * @param {string} [algorithm] The algorithm to use for the hash operation. `Default sha256`
+ * @param {BufferEncoding} [encoding] The encoding to use for the hash operation. `Default hex`
+ * @param {string} [salt] The encoding to use for the hash operation. `Default ''`
+ *
+ * @returns {string} The hashed string.
+ */
+function hash(target, algorithm = 'sha256', encoding = 'hex', salt = '') {
+
+	// Return hashed string in the requested encoding to the caller.
+	return crypto.createHash(algorithm).update(salt + target).digest(encoding);
+}
+
+// #endregion
+
+// #region Asymmetric encryption / decryption
+
+/**
+ * Encrypt data using an asymmetric public key.
+ * 
+ * @param {string} data - The data to encrypt.
+ * @param {crypto.RsaPublicKey|crypto.RsaPrivateKey|crypto.KeyLike} key - The utf8 string representing the asymmetric public or private key.
+ * Because RSA public keys can be derived from private keys, a private key may be passed instead of a public key.
+ * @param {BufferEncoding} [inputEncoding] - Optional, the encoding of the provided data. `Default utf8`
+ * @param {BufferEncoding} [outputEncoding] - Optional, the encoding to apply on the encrypted data string. `Default base64`
+ * 
+ * @returns {string} The encrypted data.
+ */
+function publicEncrypt(data, key, inputEncoding = 'utf8', outputEncoding = 'base64') {
+
+	return crypto.publicEncrypt(key, Buffer.from(data, inputEncoding)).toString(outputEncoding);
+}
+
+/**
+ * Decrypt data using an asymmetric public key.
+ * 
+ * @param {string} encryptedData - The data to encrypt.
+ * @param {crypto.RsaPublicKey|crypto.RsaPrivateKey|crypto.KeyLike} key - The utf8 string representing the asymmetric public key.
+ * Because RSA public keys can be derived from private keys, a private key may be passed instead of a public key.
+ * @param {BufferEncoding} [inputEncoding] - Optional, the encoding of the provided encrypted data. `Default base64`
+ * @param {BufferEncoding} [outputEncoding] - Optional, the encoding to apply on the decrypted string. `Default utf8`
+ * 
+ * @returns {string} The encrypted data.
+ */
+function publicDecrypt(encryptedData, key, inputEncoding = 'base64', outputEncoding = 'utf8') {
+
+	return crypto.publicDecrypt(key, Buffer.from(encryptedData, inputEncoding)).toString(outputEncoding);
+}
+
+/**
+ * Encrypt data using an asymmetric private key.
+ * 
+ * @param {string} data - The data to decrypt.
+ * @param {crypto.KeyLike} privateKey - The utf8 string representing the asymmetric private key.
+ * @param {string} privateKeyPassword - The passphrase to the private key.
+ * @param {BufferEncoding} [inputEncoding] - Optional, the encoding of the provided data. `Default utf8`
+ * @param {BufferEncoding} [outputEncoding] - Optional, the encoding to apply on the encrypted data string. `Default base64`
+ * 
+ * @returns {string} The encrypted data.
+ */
+function privateEncrypt(data, privateKey, privateKeyPassword, inputEncoding = 'utf8', outputEncoding = 'base64') {
+
+	return crypto.privateEncrypt(
+		{
+			key: privateKey,
+			passphrase: privateKeyPassword
+		},
+		Buffer.from(data, inputEncoding)
+	).toString(outputEncoding);
+}
+
+/**
+ * Decrypt data using an asymmetric private key.
+ * 
+ * @param {string} encryptedData - The data to decrypt.
+ * @param {crypto.KeyLike} privateKey - The utf8 string representing the asymmetric private key.
+ * @param {string} privateKeyPassword - The passphrase to the private key.
+ * @param {BufferEncoding} [inputEncoding] - Optional, the encoding of the provided encrypted data. `Default base64`
+ * @param {BufferEncoding} [outputEncoding] - Optional, the encoding to apply on the decrypted string. `Default utf8`
+ * 
+ * @returns {string} The decrypted data.
+ */
+function privateDecrypt(encryptedData, privateKey, privateKeyPassword, inputEncoding = 'base64', outputEncoding = 'utf8') {
+
+	return crypto.privateDecrypt(
+		{
+			key: privateKey,
+			passphrase: privateKeyPassword
+		},
+		Buffer.from(encryptedData, inputEncoding)
+	).toString(outputEncoding);
+}
+
+// #endregion
+
 // #region Password-Based Key Derivation Function 2
 
 /**
@@ -101,6 +201,11 @@ async function pbkdf2decrypt({ encryptedData, password, salt, ivBase16char, inpu
 // #endregion
 
 export {
+	hash,
+	publicDecrypt,
+	publicEncrypt,
+	privateDecrypt,
+	privateEncrypt,
 	pbkdf2decrypt,
 	pbkdf2encrypt
 };

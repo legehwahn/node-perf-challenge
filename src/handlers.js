@@ -1,5 +1,5 @@
 import http from 'http'; // eslint-disable-line no-unused-vars
-import { pbkdf2decrypt, pbkdf2encrypt } from './crypto.js'; // eslint-disable-line sort-imports
+import { pbkdf2decrypt, pbkdf2encrypt } from './cryptoHelpers.js'; // eslint-disable-line sort-imports
 
 /**
  * @param {http.IncomingMessage} request TODO:

@@ -14,7 +14,7 @@
 			"program": "${workspaceFolder}/src/main.js",
 			"console": "integratedTerminal",
 			"env": {
-				"PORT": "55055"
+				"PORT": "3000"
 			},
 			"cwd": "${workspaceFolder}/src",
 			"smartStep": true,
