@@ -1,18 +1,27 @@
 {
 	"name": "crypto-perf-test",
 	"version": "1.0.0",
+	"license": "MIT",
 	"type": "module",
 	"main": "src/main.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/legehwahn/node-perf-challenge.git"
+	},
+	"bugs": {
+		"url": "https://github.com/legehwahn/node-perf-challenge/issues"
+	},
+	"homepage": "https://github.com/legehwahn/node-perf-challenge#readme",
 	"scripts": {
 		"start": "SET PORT=3000 && node --experimental-specifier-resolution=node src/main.js"
-	},
-	"license": "MIT",
-	"devDependencies": {
-		"babel-eslint": "10.1.0",
-		"eslint": "7.10.0"
+		
 	},
 	"engines": {
 		"node": ">=18.2.0",
 		"npm": ">=8.6.0"
+	},
+	"devDependencies": {
+		"babel-eslint": "10.1.0",
+		"eslint": "7.10.0"
 	}
 }

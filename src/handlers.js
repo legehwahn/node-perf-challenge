@@ -1,6 +1,8 @@
 import http from 'http'; // eslint-disable-line no-unused-vars
 import { pbkdf2decrypt, pbkdf2encrypt } from './cryptoHelpers.js'; // eslint-disable-line sort-imports
 
+const keys = {};
+
 /**
  * @param {http.IncomingMessage} request TODO:
  * 
@@ -25,6 +27,28 @@ function readBody(request) {
 			reject(error);
 		});
 	});
+}
+
+/**
+ * @param {http.IncomingMessage} request TODO:
+ * @param {http.ServerResponse} response TODO:
+ * 
+ * @returns {Promise<void>} TODO:
+ */
+async function setCerts(request, response) {
+
+	try {
+
+		const { publicKey, privateKey } = JSON.parse(await readBody(request));
+		// TODO: set certs
+		response.statusCode = 204;
+		response.end(); // TODO: supply required args
+
+	} catch (error) {
+
+		response.statusCode = 418; // eslint-disable-line require-atomic-updates
+		response.end();
+	}
 }
 
 /**

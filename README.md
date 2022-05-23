@@ -4,22 +4,17 @@
 
 - nodejs
 - npm
-- vscode (only required for debugging)
 
 ### Local setup
 
-- `npm ci`
+- `npm i`
 
-### Debugging
+### Run
 
-- F5
+(optional) Specify PORT environment variable. `default: 3000`
 
-### Run standalone
-
-Specify PORT environment variable
-
-- `npm start`
-- `node --experimental-specifier-resolution=node main.js`
+1. `npm start`
+1. `node --experimental-specifier-resolution=node main.js`
 
 ### Test
 
@@ -29,6 +24,6 @@ curl --request POST \
   --header 'Content-Type: application/json' \
   --data '{
 	"data": "something to encrypt",
-	"password": "chuck-norris-strength-level-secure-key"
+	"password": "alpha-bravo-charlie-delta-echo-foxtrot"
 }'
 ```
