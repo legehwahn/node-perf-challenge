@@ -1,7 +1,11 @@
 import http from 'http'; // eslint-disable-line no-unused-vars
-import { pbkdf2decrypt, pbkdf2encrypt } from './cryptoHelpers.js'; // eslint-disable-line sort-imports
+import { publicDecrypt, privateEncrypt } from './cryptoHelpers.js'; // eslint-disable-line sort-imports
 
-const keys = {};
+const keys = {
+	publicKey: '',
+	passphrase: '',
+	privateKey: ''
+};
 
 /**
  * @param {http.IncomingMessage} request TODO:
@@ -35,14 +39,37 @@ function readBody(request) {
  * 
  * @returns {Promise<void>} TODO:
  */
-async function setCerts(request, response) {
+async function setPublicKey(request, response) {
 
 	try {
 
-		const { publicKey, privateKey } = JSON.parse(await readBody(request));
-		// TODO: set certs
+		keys.publicKey = await readBody(request);
+
 		response.statusCode = 204;
-		response.end(); // TODO: supply required args
+		response.end();
+
+	} catch (error) {
+
+		response.statusCode = 418; // eslint-disable-line require-atomic-updates
+		response.end();
+	}
+}
+
+/**
+ * @param {http.IncomingMessage} request TODO:
+ * @param {http.ServerResponse} response TODO:
+ * 
+ * @returns {Promise<void>} TODO:
+ */
+async function setPrivateKey(request, response) {
+
+	try {
+
+		keys.privateKey = await readBody(request);
+		keys.passphrase = request.headers.passphrase || '';
+
+		response.statusCode = 204;
+		response.end();
 
 	} catch (error) {
 
@@ -61,8 +88,8 @@ async function decryptor(request, response) {
 
 	try {
 
-		const { encryptedData, password } = JSON.parse(await readBody(request));
-		response.end(await pbkdf2decrypt(encryptedData, password)); // TODO: supply required args
+		const { encryptedData } = JSON.parse(await readBody(request));
+		response.end(await publicDecrypt(encryptedData, keys.publicKey));
 
 	} catch (error) {
 
@@ -81,8 +108,8 @@ async function encryptor(request, response) {
 
 	try {
 
-		const { data, password } = JSON.parse(await readBody(request));
-		response.end(await pbkdf2encrypt(data, password)); // TODO: supply required args
+		const { data } = JSON.parse(await readBody(request));
+		response.end(await privateEncrypt(data, keys.privateKey, keys.passphrase));
 
 	} catch (error) {
 
@@ -93,5 +120,7 @@ async function encryptor(request, response) {
 
 export {
 	decryptor,
-	encryptor
+	encryptor,
+	setPublicKey,
+	setPrivateKey
 };

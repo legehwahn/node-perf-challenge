@@ -1,5 +1,5 @@
 import http from 'http';
-import { decryptor, encryptor } from './handlers'; // eslint-disable-line sort-imports
+import { decryptor, encryptor, setPrivateKey, setPublicKey } from './handlers'; // eslint-disable-line sort-imports
 
 const port = process.env.PORT || 3000;
 
@@ -16,6 +16,14 @@ const server = http.createServer((request, response) => {
 		const url = new URL(request.url, `http://${request.headers.host}`);
 
 		switch (url.pathname) {
+
+			case '/keys/private':
+				setPrivateKey(request, response);
+				break;
+
+			case '/keys/public':
+				setPublicKey(request, response);
+				break;
 
 			case '/encrypt':
 				encryptor(request, response);
