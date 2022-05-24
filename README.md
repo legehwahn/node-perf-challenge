@@ -2,19 +2,14 @@
 
 ### Prerequisites
 
-- nodejs
-- npm
-
-### Local setup
-
-- `npm i`
+- [nodejs v18](https://nodejs.org/en/download/current/)
 
 ### Run
 
 (optional) Specify PORT environment variable. `default: 3000`
 
+1. `npm install` (only required to perform once to install dependencies)
 1. `npm start`
-1. `node --experimental-specifier-resolution=node main.js`
 
 ### Test
 
