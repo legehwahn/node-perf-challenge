@@ -16,7 +16,7 @@
 An asymmetric key pair can be generated using
 [this keygen script](https://github.com/legehwahn/keygen).
 
-Set Public Key
+1. **Set Public Key**
 
 ```
 curl --request POST \
@@ -39,7 +39,7 @@ frl8jn0HMKddFqVTzdYeUnsCAwEAAQ==
 '
 ```
 
-Set Private Key
+2. **Set Private Key**
 
 ```
 curl --request POST \
@@ -103,7 +103,7 @@ z24LBqco7Yur4E2+zh5QDmVmMcodcCucE0/K4vx55ubl
 '
 ```
 
-**Encrypt**
+3. **Encrypt**
 
 Performs a private encrypt which requires the private key and passphrase to be
 set.
@@ -117,7 +117,7 @@ curl --request POST \
 }'
 ```
 
-**Decrypt**
+4. **Decrypt**
 
 Performs a public decrypt which requires the public key to be set.
 
